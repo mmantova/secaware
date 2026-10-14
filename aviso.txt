@@ -1,0 +1,69 @@
+==============================================================================
+ USB DESCONHECIDO — DEMONSTRACAO DE SEGURANCA PARA DESENVOLVEDORES
+==============================================================================
+
+Este arquivo foi baixado do GitHub e aberto pelo Notepad AUTOMATICAMENTE,
+em poucos segundos, por um dispositivo USB que voce acabou de plugar.
+
+Nenhum clique. Nenhuma permissao. Nenhum aviso do Windows Defender que
+voce tenha notado. So um teclado virtual (HID) que digitou um comando.
+
+------------------------------------------------------------------------------
+ O QUE ACONTECEU (passo a passo)
+------------------------------------------------------------------------------
+1. O USB se apresentou ao Windows como um teclado (HID), nao como pendrive.
+2. Abriu a caixa "Executar" (Win + R).
+3. Digitou um PowerShell que baixou ESTE arquivo da internet.
+4. Abriu no Notepad — so para voce ler.
+
+Tudo em ~3 segundos. Sem voce fazer nada alem de plugar o USB.
+
+------------------------------------------------------------------------------
+ O QUE PODERIA TER ACONTECIDO (se fosse um ataque real)
+------------------------------------------------------------------------------
+Em vez de baixar um .txt inofensivo e abrir no Notepad, o mesmo comando
+poderia ter:
+
+- Baixado e EXECUTADO um beacon de Command and Control (C2).
+- Estabelecido um tunel reverso para o atacante.
+- Exfiltrado seus secrets, chaves SSH, tokens no ~/.aws, .env, .npmrc.
+- Lanzado um ransomware ou wiper.
+- Persistido em startup/registry para sobreviver a reboot.
+
+A UNICA diferenca entre esta demo e um ataque real e uma linha de codigo:
+"abrir no Notepad" vs "executar o que baixou". O canal de download ja
+funcionou. Voce esta comprometido em potencial.
+
+------------------------------------------------------------------------------
+ POR QUE ISSO E TAO PERIGOSO PARA DEVS
+------------------------------------------------------------------------------
+- Sua maquina tem: secrets, tokens, acesso a producao, chaves de deploy.
+- Um USB encontrado no estacionamento/cafeteria/recepcao e pretexto classico.
+- O atacante nao precisa de exploit — so de voce plugar.
+- Defender/EDR nao bloqueia HID legitimo (e um teclado).
+- O download veio de um dominio confiavel (GitHub raw), nao de um C2
+  suspeito — dificil de detectar por reputacao.
+
+------------------------------------------------------------------------------
+ O QUE FAZER
+------------------------------------------------------------------------------
+1. NUNCA plugue USB de procedencia duvidosa. Se achou, entregue ao time
+   de seguranca; nao plugue "so pra ver o que tem".
+2. Use USBGuard (Linux) ou GPO de bloqueio de novos dispositivos HID.
+3. Restrinja PowerShell/mshta por AppLocker/WDAC em maquinas de dev.
+4. Mantenha secrets em um secret manager, nao em texto no disco.
+5. Audite: Get-PnpDevice | where Class -eq Keyboard, e eventos USB no log.
+6. Em caso de exposicao real: rotule a maquina como comprometida, rotate
+   todos os secrets e credenciais, faca forense antes de confiar nela.
+
+------------------------------------------------------------------------------
+ ESTA DEMO E INOFENSIVA
+------------------------------------------------------------------------------
+Nada foi executado. Nada foi alterado. So um arquivo de texto foi baixado
+para %TEMP% e aberto no Notepad. Pode apagar aviso.txt em %TEMP% sem risco.
+
+Para reproduzir/conscientizar sua equipe: este USB + o aviso.txt no
+GitHub sao a demonstracao. O codigo do dispositivo esta no repo do projeto.
+
+-- Time de Seguranca
+==============================================================================
